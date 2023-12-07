@@ -20,7 +20,6 @@ public class BookLoanController {
 
     @PostMapping
     public ResponseEntity<?> bookLoan(@RequestBody BookLoanDTO bookLoanDTO){
-
         try {
             bookLoanService.bookLoan(bookLoanDTO);
 

@@ -30,8 +30,8 @@ public class BookLoanService {
             throw new IllegalStateException("Book with bookId(" + bookLoanDTO.getBookId() + ") does not exist");
         }
 
-        BookLoan currentLoan = bookLoanMapper.findBookLoanByBookId(bookLoanDTO.getBookId());
-        if (currentLoan != null && currentLoan.isStatus()) {
+        BookLoan currentBookLoan = bookLoanMapper.findBookLoanByBookId(bookLoanDTO.getBookId());
+        if (currentBookLoan != null && currentBookLoan.isStatus()) {
             throw new IllegalStateException("Book is already loaned");
         }
 
@@ -41,15 +41,15 @@ public class BookLoanService {
         }
 
         BookLoan bookLoan = new BookLoan();
-        bookLoan.setBooksBookId(bookLoanDTO.getBookId());
-        bookLoan.setUsersUserId(userId);
+        bookLoan.setBooks_bookId(bookLoanDTO.getBookId());
+        bookLoan.setUsers_userId(userId);
         bookLoan.setLoanDate(new Date());
         bookLoan.setStatus(true);
 
         try {
             int isInserted = bookLoanMapper.insertBookLoan(bookLoan);
             if (isInserted == 0) {
-                throw new DataInsertionException("Fail to insert bookLoan data: " + bookLoanDTO.getBookId());
+                throw new DataInsertionException("Fail to insert bookLoan data for bookId: " + bookLoanDTO.getBookId());
             }
         } catch (Exception e) {
             throw new RuntimeException("Unexpected error occurred during book loan: " + e.getMessage());
@@ -59,14 +59,17 @@ public class BookLoanService {
     @Transactional
     public void bookLoanReturn(BookLoanDTO bookLoanDTO) {
         BookLoan bookLoan = bookLoanMapper.findBookLoanByBookId(bookLoanDTO.getBookId());
+        if (bookLoan == null || !bookLoan.isStatus()) {
+            throw new IllegalStateException("Book is not loaned");
+        }
 
         bookLoan.setReturnDate(new Date());
         bookLoan.setStatus(false);
 
         try {
-            int isUpdated = bookLoanMapper.updateBookLoanReturn(bookLoanDTO.getBookId());
+            int isUpdated = bookLoanMapper.updateBookLoanReturn(bookLoan.getBookLoanId());
             if (isUpdated == 0) {
-                throw new DataInsertionException("Fail to update bookLoan data: " + bookLoanDTO.getBookId());
+                throw new DataInsertionException("Fail to insert bookLoan data for bookId: " + bookLoanDTO.getBookId());
             }
         } catch (Exception e) {
             throw new RuntimeException("Unexpected error occurred during book loan return: " + e.getMessage());
