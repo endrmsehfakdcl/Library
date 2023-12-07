@@ -7,5 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
     int insertUser(User user);
     int countUsername(String username);
+    Long findUserIdByUsername(String username);
 
 }

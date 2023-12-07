@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.BookMapper">
+
+    <insert id="insertBook" parameterType="com.library.model.Book">
+        insert into books (title, author, publisher, price)
+        values (#{title}, #{author}, #{publisher}, #{price})
+    </insert>
+
+    <update id="updateBook" parameterType="com.library.model.Book">
+        update books
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="publisher != null">publisher = #{publisher},</if>
+            <if test="price != null">price = #{price}</if>
+        </set>
+        where bookId = #{bookId}
+    </update>
+
+    <select id="findBookById" resultType="com.library.model.Book">
+        select * from books
+        where bookId = #{bookId}
+    </select>
+</mapper>

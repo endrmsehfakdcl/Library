@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.BookLoanMapper">
+
+    <insert id="insertBookLoan" parameterType="com.library.model.BookLoan">
+        insert into bookloans (loanDate, status, books_bookId, users_userId)
+        values (#{loanDate}, #{status}, #{booksBookId}, #{usersUserId})
+    </insert>
+
+    <update id="updateBookLoanReturn" parameterType="java.lang.Long">
+        update bookloans
+        set
+        returnDate = current_date, status = false
+        where bookloanId = #{bookloanId}
+    </update>
+
+    <select id="findBookLoanByBookId" resultType="com.library.model.BookLoan">
+        select * from bookloans
+        where books_bookId = #{booksBookId}
+    </select>
+
+    <select id="findBookLoanListByBookId" resultType="com.library.model.BookLoan">
+        select * from bookloans
+        where books_bookId = #{booksBookId}
+    </select>
+</mapper>

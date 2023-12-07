@@ -7,6 +7,7 @@ import com.library.mapper.UserMapper;
 import com.library.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +15,7 @@ public class UserService {
 
     private final UserMapper userMapper;
 
+    @Transactional
     public void register(UserDTO userDTO) {
 
         if (isUsernameExists(userDTO.getUsername())) {
@@ -30,7 +32,7 @@ public class UserService {
                 throw new DataInsertionException("Fail to insert user data: " + userDTO.getUsername());
             }
         } catch (Exception e) {
-            throw new RuntimeException("Unexpected error occurred during registration: " + e.getMessage());
+            throw new RuntimeException("Unexpected error occurred during user registration: " + e.getMessage());
         }
 
     }

@@ -12,4 +12,6 @@ public class BookLoan {
     private Date loanDate;
     private Date returnDate;
     private boolean status;
+    private Long booksBookId; // fk
+    private Long usersUserId; // fk
 }
