@@ -9,3 +9,6 @@ else
     echo "Stopping application with PID $PID."
     kill $PID
 fi
+
+echo "Removing existing JAR file."
+rm -f /home/ec2-user/Library-0.0.1-SNAPSHOT.jar
