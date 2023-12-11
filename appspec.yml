@@ -3,7 +3,7 @@ os: linux
 files:
   - source: /build/libs
     destination: /home/ec2-user
-  - source: /scripts/*.sh
+  - source: /scripts
     destination: /home/ec2-user/scripts
 hooks:
   BeforeInstall:
