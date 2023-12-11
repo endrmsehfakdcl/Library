@@ -4,24 +4,24 @@
 <mapper namespace="com.library.mapper.BookLoanMapper">
 
     <insert id="insertBookLoan" parameterType="com.library.model.BookLoan">
-        insert into bookloans (loanDate, status, books_bookId, users_userId)
+        insert into bookLoans (loanDate, status, books_bookId, users_userId)
         values (#{loanDate}, #{status}, #{books_bookId}, #{users_userId})
     </insert>
 
     <update id="updateBookLoanReturn" parameterType="java.lang.Long">
-        update bookloans
+        update bookLoans
         set
         returnDate = current_date, status = false
-        where bookloanId = #{bookloanId}
+        where bookLoanId = #{bookloanId}
     </update>
 
     <select id="findBookLoanByBookId" resultType="com.library.model.BookLoan">
-        select * from bookloans
+        select * from bookLoans
         where books_bookId = #{books_bookId} and status = true
     </select>
 
     <select id="findBookLoanListByBookId" resultType="com.library.model.BookLoan">
-        select * from bookloans
+        select * from bookLoans
         where books_bookId = #{books_bookId}
     </select>
 </mapper>
